@@ -95,6 +95,36 @@ public class Main extends JavaPlugin {
 		return i;
 	}
 	
+	public static ItemStack shroudOfEden() {
+		Itemstack i = new ItemStack(Material.PAPER);
+		ItemMeta im = i.getItemMeta();
+		List<String> l = new ArrayList<String>();
+		im.setDisplayName(ChatColor.GOLD + "Shroud of Eden");
+		l.add(ChatColor.GREEN + "A smooth clean sheet,");
+		l.add(ChatColor.GREEN + "except for the blood stains.");
+		l.add(ChatColor.GREEN + "Place this over any wound to");
+		l.add(ChatColor.GREEN + "instantly recover, but use it");
+		l.add(ChatColor.GREEN + "more than once, and you will");
+		l.add(ChatColor.GREEN + "torn apart by its creator.");
+		im.setLore(l);
+		i.setItemMeta(im);
+		return i;
+	}
+	
+	public static ItemStack swordOfEden() {
+		Itemstack i = new ItemStack(Material.GOLD_SWORD);
+		ItemMeta im = i.getItemMeta();
+		List<String> l = new ArrayList<String>();
+		im.setDisplayName(ChatColor.GOLD + "Blade of Eden");
+		l.add(ChatColor.GREEN + "A blade that had been stuck");
+		l.add(ChatColor.GREEN + "inside of a rock for years,");
+		l.add(ChatColor.GREEN + "waiting for the chosen one");
+		l.add(ChatColor.GREEN + "to one day wield it again.");
+		im.setLore(l);
+		i.setItemMeta(im);
+		return i;
+	}
+	
 	@SuppressWarnings("deprecation")
 	public void onEnable() {
 		instance = this;
