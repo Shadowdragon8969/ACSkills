@@ -108,6 +108,75 @@ public class PlayerClickListener implements Listener {
 	}
 	
 	@EventHandler
+	public void healthBurst(PlayerInteractEvent e) {
+		Player p = e.getPlayer();
+		ACPlayer acp = new ACPlayer(p);
+		if (!(e.getAction() == Action.RIGHT_CLICK_AIR)) return;
+		ItemStack it = p.getInventory().getItemInMainHand();
+		if (it != null && it.getType() == Material.GOLD_SWORD
+				&& it.hasItemMeta() && it.getItemMeta().hasDisplayName()
+				&& it.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "Shroud of Eden")) {
+			if (acp.getCounter() == false) {
+				p.setHealth(p.getMaxHealth());
+				acp.swapCounter();
+			}else{
+				if (acp.getCounter() == true) {
+					p.setHealth(0.0);
+					Bukkit.getServer().broadcastMessage(ChatColor.GREEN + p.getName() + " was torn apart by the Shroud of Eden");
+					acp.swapCounter();
+				}
+			}
+		}
+	
+	@EventHandler
+	public void swordBurst(PlayerInteractEvent e) {
+		Player p = e.getPlayer();
+		ACPlayer acp = new ACPlayer(p);
+		if (!(e.getAction() == Action.RIGHT_CLICK_AIR)) return;
+		ItemStack it = p.getInventory().getItemInMainHand();
+		if (it != null && it.getType() == Material.GOLD_SWORD
+				&& it.hasItemMeta() && it.getItemMeta().hasDisplayName()
+				&& it.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "Blade of Eden")) {
+			p.damage(1.5);
+			new BukkitRunnable() {
+				Player p = e.getPlayer();
+				Vector dir = p.getLocation().getDirection().normalize();
+				Location loc = p.getLocation();
+				double t = 0;
+				@SuppressWarnings("deprecation")
+				public void run() {
+					t = t + 1.0;
+					double x = dir.getX() * t;
+					double y = dir.getY() * t + 1.3;
+					double z = dir.getZ() * t;
+					loc.add(x,y,z);
+					for (Player play : loc.getWorld().getPlayers()) {
+						play.playEffect(loc, Effect.FLAME, 0);
+					}
+					for (Entity ent : loc.getWorld().getEntities()) {
+						if (ent.getLocation().distance(loc) < 1.5) {
+							if (!ent.equals(p) && ent instanceof Damageable) {
+								Damageable d = (Damageable) ent;
+								d.damage(2.0);
+							}
+						}
+					}
+					
+						if (!(loc.getBlock().getType() == Material.AIR || loc.getBlock().getType() == Material.BEDROCK || loc.getBlock().getType() == Material.OBSIDIAN)) {
+							p.playEffect(loc, Effect.EXPLOSION, 1);
+							this.cancel();
+						}
+					
+					loc.subtract(x,y,z);
+					if (t > 40) {
+						this.cancel();
+					}
+				}
+			}.runTaskTimer(Main.getInstance(), 0, 1);
+		}
+	}
+	
+	@EventHandler
 	public void gunShoot(PlayerInteractEvent e) {
 		Player p = e.getPlayer();
 		ACPlayer acp = new ACPlayer(p);
