@@ -12,6 +12,7 @@ public class ACPlayer {
 
 	private Player a;
 	private static HashMap<Player, Integer> stamina = new HashMap<Player, Integer>();
+	private static HashMap<Player, Boolean> shroudCounter = new HashMap<Player, Boolean>();
 	
 	public ACPlayer(Player arg0) {
 		this.a = arg0;
@@ -20,10 +21,30 @@ public class ACPlayer {
 		if (!stamina.containsKey(a)) {
 			stamina.put(a, 0);
 		}
+		if (shroudCounter.containsKey(a)) {
+		}
+		if (!shroudCounter.containsKey(a)) {
+			shroudCounter.put(a, false);
+		}
 	}
 	
 	public int getStamina() {
 		return stamina.get(a);
+	}
+	
+	public void swapCounter() {
+		if (shroudCounter.get(a) == false) {
+			shroudCounter.put(a, true);
+			return;
+		}
+		if (shroudCounter.get(a) == true) {
+			shroudCounter.put(a, false);
+			return;
+		}
+	}
+	
+	public boolean getCounter() {
+		return shroudCounter.get(a);
 	}
 	
 	public ACPlayer addStamina(int amt) {
