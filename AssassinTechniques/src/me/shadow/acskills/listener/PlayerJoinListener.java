@@ -19,11 +19,32 @@ public class PlayerJoinListener implements Listener {
 	
 	@EventHandler
 	public void onCmd(PlayerCommandPreprocessEvent e) {
+		Player p = e.getPlayer();
 		if (e.getMessage().equalsIgnoreCase("/assassin")) {
 			if (!(e.getPlayer().hasPermission("acskills.item"))) return;
 			e.setCancelled(true);
 			ACPlayer acp = new ACPlayer(e.getPlayer());
 			acp.setHasSkills(1);
+		}
+		if (e.getMessage().equalsIgnoreCase("/edenStave")) {
+			if (!(e.getPlayer().hasPermission("acskills.eden.staff"))) return;
+			e.setCancelled(true);
+			p.getInventory().addItem(Main.staffOfEden());
+		}
+		if (e.getMessage().equalsIgnoreCase("/edenApple")) {
+			if (!(e.getPlayer().hasPermission("acskills.eden.apple"))) return;
+			e.setCancelled(true);
+			p.getInventory().addItem(Main.applefEden());
+		}
+		if (e.getMessage().equalsIgnoreCase("/edenShroud")) {
+			if (!(e.getPlayer().hasPermission("acskills.eden.shroud"))) return;
+			e.setCancelled(true);
+			p.getInventory().addItem(Main.shroudOfEden());
+		}
+		if (e.getMessage().equalsIgnoreCase("/edenSword")) {
+			if (!(e.getPlayer().hasPermission("acskills.eden.sword"))) return;
+			e.setCancelled(true);
+			p.getInventory().addItem(Main.swordOfEden());
 		}
 	}
 	
